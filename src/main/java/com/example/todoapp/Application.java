@@ -37,6 +37,7 @@ public class Application {
     private static void handleTasks(HttpExchange exchange) throws IOException {
         String method = exchange.getRequestMethod();
         String path = exchange.getRequestURI().getPath();
+        String query = exchange.getRequestURI().getQuery();
 
         //region Manage POST /tasks
         if ("POST".equals(method) && "/tasks".equals(path)) {
@@ -46,6 +47,16 @@ public class Application {
             exchange.getResponseHeaders().add("Location", "/tasks/" + createdTask.id());
             sendResponse(exchange, 201, JsonUtils.serialize(createdTask));
             return;
+            else if("GET".equals(method)&& "/tasks".equals(path)) {
+                boolean todoOnly=nonNull(query) && query.contains("todo-only=true");
+                if todoOnly=true{
+
+                }
+                else {
+
+
+                }
+            }
         }
         //endregion
 
@@ -64,16 +75,17 @@ public class Application {
         }
         //endregion
         Matcher m = ID_PATH.matcher(path);
-        if ("GET".equals(method) && m.matches()) {
+        if ("DELETE".equals(method) && m.matches()) {
             int id = Integer.parseInt(m.group(1));
             Optional<Task> task = dao.findById(id);
 
             if (task.isPresent()) {
-                sendResponse(exchange, 200, JsonUtils.serialize(task.get()));
+                sendResponse(exchange, 20, JsonUtils.serialize(task.delete()));
             } else {
                 sendResponse(exchange, 404, null);
             }
             return;
+        }
         // Otherwise → 404
         sendResponse(exchange, 404, null);
     }
