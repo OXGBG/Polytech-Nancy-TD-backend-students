@@ -1,0 +1,8 @@
+$kind: http-request
+name: POST /task
+url: task
+method: POST
+body:
+  type: json
+  content: ""
+order: 4502454451313011

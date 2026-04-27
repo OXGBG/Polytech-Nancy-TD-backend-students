@@ -1,0 +1,5 @@
+$kind: http-request
+name: DELETE tasks/1
+url: tasks/1
+method: DELETE
+order: 4404571433305407

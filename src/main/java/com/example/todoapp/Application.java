@@ -63,7 +63,17 @@ public class Application {
             return;
         }
         //endregion
+        Matcher m = ID_PATH.matcher(path);
+        if ("GET".equals(method) && m.matches()) {
+            int id = Integer.parseInt(m.group(1));
+            Optional<Task> task = dao.findById(id);
 
+            if (task.isPresent()) {
+                sendResponse(exchange, 200, JsonUtils.serialize(task.get()));
+            } else {
+                sendResponse(exchange, 404, null);
+            }
+            return;
         // Otherwise → 404
         sendResponse(exchange, 404, null);
     }

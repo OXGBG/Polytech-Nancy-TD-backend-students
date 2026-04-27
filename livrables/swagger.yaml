@@ -37,6 +37,29 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Task'
+        get:
+            tags: [ tasks ]
+            summary: récupérer une tâche
+            operationId: récupereTask
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/Task'
+            responses:
+                '200':
+                    description: Tâche
+                    headers:
+                        Location:
+                            description: URL de la ressource créée
+                            schema:
+                                type: string
+                                example: /tasks/1
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Task'
 
     /tasks/{id}:
         parameters:
@@ -61,6 +84,34 @@ paths:
                                 $ref: '#/components/schemas/Task'
                 '404':
                     description: Tâche non trouvée
+        delete:
+            tags: [ tasks ]
+            summary: supprimer une tache
+            description: supprimer une tâche par son identifiant
+            operationId: deletTaskById
+            responses:
+                '204':
+                    description: Tâche supprimée avec succès
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Task'
+                '404':
+                    description: Tâche non trouvée
+        put:
+            tags: [ tasks ]
+            summary: modifier une tâche
+            description: modifier une tâche par son identifiant
+            operationId: getTaskById
+            responses:
+                '204':
+                    description: Tâche modifiée avec succès
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Task'
+                '404':
+                    description: Tâche non trouvée²
 components:
     schemas:
         Task:

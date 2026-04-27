@@ -1,0 +1,8 @@
+$kind: http-request
+name: PUT tasks/1
+url: tasks/1
+method: PUT
+body:
+  type: json
+  content: ""
+order: 4500662661643077

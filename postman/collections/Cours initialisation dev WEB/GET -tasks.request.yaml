@@ -1,0 +1,9 @@
+$kind: http-request
+name: GET /tasks
+url: tasks?todo-only=true
+method: GET
+queryParams:
+  - key: todo-only
+    value: "true"
+    $type: boolean
+order: 4395953326273683
