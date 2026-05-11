@@ -36,5 +36,46 @@ public class TaskDao {
         return Optional.ofNullable(storage.get(id));
     }
 
+    /**
+     * Retrieve all {@link Task} models.
+     * @return list of {@link Task} models.
+     */
+    public List<Task> findAll() {
+        return new ArrayList<>(storage.values());
+    }
+
+    /**
+     * Retrieve all {@link Task} models that are not done.
+     * @return list of {@link Task} models to do.
+     */
+    public List<Task> findTodo() {
+        return storage.values().stream()
+                .filter(task -> Boolean.FALSE.equals(task.done()))
+                .toList();
+    }
+
+    /**
+     * Delete {@link Task} model by id.
+     * @param id identifier of the {@link Task}.
+     * @return true if deleted, false if not found.
+     */
+    public boolean delete(int id) {
+        return storage.remove(id) != null;
+    }
+
+    /**
+     * Update {@link Task} model by id.
+     * @param id identifier of the {@link Task}.
+     * @param task task to update.
+     * @return true if updated, false if not found.
+     */
+    public boolean update(int id, Task updatedTask) {
+        if (!storage.containsKey(id)) {
+            return false;
+        }
+
+        storage.put(id, task);
+        return true;
+    }
 }
 

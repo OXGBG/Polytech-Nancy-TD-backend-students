@@ -39,45 +39,45 @@ paths:
                                 $ref: '#/components/schemas/Task'
         get:
             tags: [ tasks ]
-            summary: récupérer une tâche
-            operationId: récupereTask
-            requestBody:
-                required: true
-                content:
-                    application/json:
-                        schema:
-                            $ref: '#/components/schemas/Task'
+            summary: Récupérer toutes les tâches
+            operationId: getAllTasks
+            parameters:
+                - in: query
+                  name: todo-only
+                  required: false
+                  description: Si c'est vrai retourne uniquement les tâches non terminées
+                  schema:
+                      type: boolean
+                      example: true
             responses:
                 '200':
-                    description: Tâche
-                    headers:
-                        Location:
-                            description: URL de la ressource créée
-                            schema:
-                                type: string
-                                example: /tasks/1
+                    description: Liste des tâches
                     content:
                         application/json:
                             schema:
-                                $ref: '#/components/schemas/Task'
+                                type: array
+                                items:
+                                    $ref: '#/components/schemas/Task'
+                '204':
+                    description: Aucune tâche trouvée
 
     /tasks/{id}:
         parameters:
-            -   in: path
-                name: id
-                required: true
-                description: Identifiant numérique de la tâche
-                schema:
-                    type: integer
-                    minimum: 1
+            - in: path
+              name: id
+              required: true
+              description: Identifiant numérique de la tâche
+              schema:
+                  type: integer
+                  minimum: 1
         get:
             tags: [ tasks ]
             summary: Récupérer une tâche
-            description: Récupérer une tâche par son identifiant
+            description: Récupérer une tâche grace a sont ID
             operationId: getTaskById
             responses:
                 '200':
-                    description: Tâche trouvée avec succès
+                    description: la tâche a été trouvée
                     content:
                         application/json:
                             schema:
@@ -86,53 +86,49 @@ paths:
                     description: Tâche non trouvée
         delete:
             tags: [ tasks ]
-            summary: supprimer une tache
-            description: supprimer une tâche par son identifiant
-            operationId: deletTaskById
+            summary: Supprimer une tâche
+            operationId: deleteTaskById
             responses:
                 '204':
-                    description: Tâche supprimée avec succès
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/Task'
+                    description: la tâche a été supprimée
                 '404':
                     description: Tâche non trouvée
         put:
             tags: [ tasks ]
-            summary: modifier une tâche
-            description: modifier une tâche par son identifiant
-            operationId: getTaskById
+            summary: Modifier une tâche
+            operationId: updateTaskById
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/Task'
             responses:
                 '204':
-                    description: Tâche modifiée avec succès
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/Task'
+                    description: La tâche a été modifiée
                 '404':
-                    description: Tâche non trouvée²
-components:
-    schemas:
-        Task:
-            type: object
-            description: Représentation d'une tâche
-            properties:
-                id:
-                    type: integer
-                    example: 1
-                title:
-                    type: string
-                    nullable: false
-                    example: Acheter du lait
-                description:
-                    type: string
-                    nullable: true
-                    example: 2L demi-écrémé
-                done:
-                    type: boolean
-                    nullable: false
-                    example: false
-            required:
-                - id
-                - title
+                    description: Tâche non trouvée
+    components:
+        schemas:
+            Task:
+                type: object
+                description: représenter une tâche
+                properties:
+                    id:
+                        type: integer
+                        example: 1
+                    title:
+                        type: string
+                        nullable: true
+                        example: Acheter du lait
+                    description:
+                        type: string
+                        nullable: true
+                        example: 2L demi-écrémé
+                    done:
+                        type: boolean
+                        nullable: true
+                        example: false
+                required:
+                    - id
+                    - title
