@@ -1,8 +1,12 @@
-package com.example.todoapp;
+package com.example.todoapp.dao;
+
+import com.example.todoapp.business.model.Task;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.List;
+import java.util.ArrayList;
 
 /**
  * Data Access Object for {@link Task} model.
@@ -66,7 +70,7 @@ public class TaskDao {
     /**
      * Update {@link Task} model by id.
      * @param id identifier of the {@link Task}.
-     * @param task task to update.
+     * @param updatedTask task to update.
      * @return true if updated, false if not found.
      */
     public boolean update(int id, Task updatedTask) {
@@ -74,7 +78,7 @@ public class TaskDao {
             return false;
         }
 
-        storage.put(id, task);
+        storage.put(id, updatedTask);
         return true;
     }
 }
