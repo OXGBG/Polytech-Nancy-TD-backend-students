@@ -1,6 +1,7 @@
 package com.example.todoapp.presentation;
 
 import com.example.todoapp.dao.TaskDao;
+import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpServer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,6 +26,9 @@ public class Application {
         server.setExecutor(null);
         server.start();
         log.info("HTTP server started on http://localhost:8080");
+    }
+
+    private static void handleTasks(HttpExchange httpExchange) {
     }
 
 }
